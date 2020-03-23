@@ -57,7 +57,7 @@ public class SwiftFlutterQiniuPlugin: NSObject, FlutterPlugin {
         
         uploadManager?.putFile(filePath, key: key, token: token, complete: { (responseInfo, key, dict) in
             if (JSONSerialization.isValidJSONObject(dict)) {
-                let data : NSData! = try? JSONSerialization.data(withJSONObject: dict, options: []) as NSData!
+                let data : NSData! = try? JSONSerialization.data(withJSONObject: dict, options: []) as NSData?
                 let JSONString = NSString(data:data as Data,encoding: String.Encoding.utf8.rawValue)
                 result(JSONString! as String);
             } else {
@@ -93,7 +93,7 @@ public class SwiftFlutterQiniuPlugin: NSObject, FlutterPlugin {
         
         uploadManager?.put(flutterData.data, key: key, token: token, complete: { (responseInfo, key, dict) in
             if (JSONSerialization.isValidJSONObject(dict)) {
-                let data : NSData! = try? JSONSerialization.data(withJSONObject: dict, options: []) as NSData!
+                let data : NSData! = try? JSONSerialization.data(withJSONObject: dict, options: []) as NSData?
                 let JSONString = NSString(data:data as Data,encoding: String.Encoding.utf8.rawValue)
                 result(JSONString! as String);
             } else {
