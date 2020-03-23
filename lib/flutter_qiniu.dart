@@ -90,7 +90,7 @@ class FlutterQiniu {
   }
 
   /// 上传多个文件
-  Future<List<String>> uploadFiles(List<FilePathEntity> entities) async {
+  Future<List<Map>> uploadFiles(List<FilePathEntity> entities) async {
     var uploads = entities.map((entity) {
       return uploadFile(entity.filePath, entity.key, entity.token);
     });
