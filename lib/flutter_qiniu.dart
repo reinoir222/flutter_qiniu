@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'dart:convert';
 
 import 'package:flutter/services.dart';
 
@@ -39,7 +40,7 @@ class FlutterQiniu {
   /// [filePath] 文件路径
   /// [key] 保存在服务器上的资源唯一标识
   /// [token] 服务器分配的 token
-  Future<dynamic> uploadFile(String filePath, String key, String token) async {
+  Future<Map> uploadFile(String filePath, String key, String token) async {
     Map<String, String> map = {
       "filePath": filePath,
       "key": key,
@@ -48,8 +49,7 @@ class FlutterQiniu {
     };
 
     var result = await _methodChannel.invokeMethod('uploadFile', map);
-    print("result: $result");
-    return result;
+    return _processResult(result);
   }
 
   /// 单个文件上传
@@ -57,7 +57,7 @@ class FlutterQiniu {
   /// [data] 数据
   /// [key] 保存在服务器上的资源唯一标识
   /// [token] 服务器分配的 token
-  Future<dynamic> uploadData(Uint8List data, String key, String token) async {
+  Future<Map> uploadData(Uint8List data, String key, String token) async {
     Map<String, dynamic> map = {
       "data": data,
       "key": key,
@@ -66,8 +66,27 @@ class FlutterQiniu {
     };
 
     var result = await _methodChannel.invokeMethod('uploadData', map);
-    print("result: $result");
-    return result;
+    return _processResult(result);
+  }
+
+  Map _processResult(String result) {
+    Map data;
+    if (result is String) {
+      try {
+        var decode = jsonDecode(result);
+        if (decode is Map) {
+          data = decode;
+        } else {
+          print("unexpected decode result: $decode");
+        }
+      } catch (e) {
+        print("decode response failed: $result");
+        print(e);
+      }
+    } else {
+      print("unexpected response data: $result");
+    }
+    return data;
   }
 
   /// 上传多个文件
