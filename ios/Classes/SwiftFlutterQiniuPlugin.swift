@@ -35,7 +35,7 @@ public class SwiftFlutterQiniuPlugin: NSObject, FlutterPlugin {
             let filePath = arguments["filePath"],
             let key = arguments["key"],
             let token = arguments["token"] else {
-                result("")
+                result(nil)
                 return
         }
         
@@ -56,11 +56,7 @@ public class SwiftFlutterQiniuPlugin: NSObject, FlutterPlugin {
         }
         
         uploadManager?.putFile(filePath, key: key, token: token, complete: { (responseInfo, key, dict) in
-            if dict == nil {
-                result("")
-            } else {
-                result(key!)
-            }
+            result(dict)
         }, option: option)
     }
     
@@ -69,7 +65,7 @@ public class SwiftFlutterQiniuPlugin: NSObject, FlutterPlugin {
             let flutterData = arguments["data"] as? FlutterStandardTypedData,
             let key = arguments["key"] as? String,
             let token = arguments["token"] as? String else {
-                result("")
+                result(nil)
                 return
         }
         
@@ -90,11 +86,7 @@ public class SwiftFlutterQiniuPlugin: NSObject, FlutterPlugin {
         }
         
         uploadManager?.put(flutterData.data, key: key, token: token, complete: { (responseInfo, key, dict) in
-            if dict == nil {
-                result("")
-            } else {
-                result(key!)
-            }
+            result(dict)
         }, option: option)
     }
     

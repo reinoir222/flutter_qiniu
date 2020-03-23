@@ -101,9 +101,9 @@ public class FlutterQiniuPlugin implements MethodCallHandler, EventChannel.Strea
                     public void complete(String key, ResponseInfo info, JSONObject res) {
                         // res包含hash、key等信息，具体字段取决于上传策略的设置
                         if (info.isOK()) {
-                            result.success(key);
+                            result.success(res);
                         } else {
-                            result.success("");
+                            result.success(null);
                         }
                     }
                 }, options);
@@ -148,10 +148,10 @@ public class FlutterQiniuPlugin implements MethodCallHandler, EventChannel.Strea
                     public void complete(String key, ResponseInfo info, JSONObject res) {
                         // res包含hash、key等信息，具体字段取决于上传策略的设置
                         if (info.isOK()) {
-                            result.success(key);
+                            result.success(res);
                         } else {
                             //如果失败，这里可以把info信息上报自己的服务器，便于后面分析上传错误原因
-                            result.success("");
+                            result.success(null);
                         }
                     }
                 }, options);

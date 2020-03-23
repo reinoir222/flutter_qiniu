@@ -39,7 +39,7 @@ class FlutterQiniu {
   /// [filePath] 文件路径
   /// [key] 保存在服务器上的资源唯一标识
   /// [token] 服务器分配的 token
-  Future<String> uploadFile(String filePath, String key, String token) async {
+  Future<dynamic> uploadFile(String filePath, String key, String token) async {
     Map<String, String> map = {
       "filePath": filePath,
       "key": key,
@@ -48,6 +48,7 @@ class FlutterQiniu {
     };
 
     var result = await _methodChannel.invokeMethod('uploadFile', map);
+    print("result: $result");
     return result;
   }
 
@@ -56,7 +57,7 @@ class FlutterQiniu {
   /// [data] 数据
   /// [key] 保存在服务器上的资源唯一标识
   /// [token] 服务器分配的 token
-  Future<String> uploadData(Uint8List data, String key, String token) async {
+  Future<dynamic> uploadData(Uint8List data, String key, String token) async {
     Map<String, dynamic> map = {
       "data": data,
       "key": key,
@@ -65,6 +66,7 @@ class FlutterQiniu {
     };
 
     var result = await _methodChannel.invokeMethod('uploadData', map);
+    print("result: $result");
     return result;
   }
 
